@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import ollama
 import json
 import logging
 from logging.handlers import RotatingFileHandler
 import re
 
+
 app = Flask(__name__)
+CORS(app)
 
 # Set up logging to a file
 handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
