@@ -18,7 +18,6 @@ llm_model = "llama3"
 
 
 def extract_json(output):
-    print("Original Output:", output)
     # Modify the regex to match a broader range of JSON objects, including nested structures
     json_match = re.search(r'({.*})', output, re.DOTALL)
     if json_match:
@@ -103,24 +102,20 @@ def score_answer():
 
           Only output a number followed by a critique on why it was graded. so the format is
           {{
-            "answer_1": [score, "critique as to why it was scored that"],
-            "answer_2": [score, "critique as to why it was scored that"],
-            "answer_3": [score, "critique as to why it was scored that"],
+            "score_1": ["score", "critique as to why it was scored that"],
+            "score_2": ["score", "critique as to why it was scored that"],
+            "score_3": ["score", "critique as to why it was scored that"],
           }}
         """
         
-        print(prompt)
 
         app.logger.info("Sending request to Ollama server for scoring")
         response = ollama_client.chat(model=llm_model, messages=[{'role': 'system', 'content': prompt}])
         app.logger.info("Received response from Ollama server for scoring")
-        # Parse only the JSON part of the response
-        try:
-            grading_data = json.loads(response['message']['content'])
-        except json.JSONDecodeError as e:
-            app.logger.error(f"Failed to parse JSON from Ollama response: {e}")
-            return jsonify(error="Failed to parse grading data"), 500
-        return jsonify(grading_data)
+          
+        output = json.loads(response['message']['content'])
+        json_extracted = extract_json(output)
+        return jsonify(json_extracted)
     except Exception as e:
         # Log the exception and return an error message
         app.logger.error(f"An error occurred while scoring an answer: {e}")

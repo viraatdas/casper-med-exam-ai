@@ -12,3 +12,39 @@ An error occurred while scoring an answer: '\n            "answer_1"'
 Sending request to Ollama server for scoring
 Received response from Ollama server for scoring
 Failed to parse JSON from Ollama response: Expecting value: line 1 column 1 (char 0)
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+Failed to parse JSON from Ollama response: Expecting value: line 1 column 1 (char 0)
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: 'answers'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: 'answers'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: 'answers'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: string indices must be integers, not 'str'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: string indices must be integers, not 'str'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: cannot access local variable 'grading_data' where it is not associated with a value
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: cannot access local variable 'grading_data' where it is not associated with a value
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: cannot access local variable 'grading_data' where it is not associated with a value
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: string indices must be integers, not 'str'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: string indices must be integers, not 'str'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
