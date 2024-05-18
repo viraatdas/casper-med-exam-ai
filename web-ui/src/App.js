@@ -45,9 +45,16 @@ function App() {
       answer_3: answers.answer_3
     };
 
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
     console.log(payload);
 
-    axios.post(`${apiUrl}/score_answer`, JSON.stringify(payload, null, 2))
+      axios.post(`${apiUrl}/score_answer`, payload, config)
       .then(response => {
         setResults(JSON.stringify(response.data, null, 2));
         setIsLoading(false);

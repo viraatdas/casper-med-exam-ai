@@ -84,25 +84,41 @@ def score_answer():
     try:
         # Use ollama to score the answer provided by the user
         data = request.json
-        if not data or 'answer' not in data:
+        print("data")
+        print(data)
+        print(data.keys())
+        if not data:
             return jsonify(error="No answers provided"), 400
         
-        json_scenario = json.dumps(data["scenario"])
-        json_question = json.dumps(data["question"])
-        json_answer = json.dumps(data["answer"])
+        scenario = data["scenario"]
+        question_1 = data["question_1"]
+        question_2 = data["question_2"]
+        question_3 = data["question_3"]
+        answer_1 = data["answer_1"]
+        answer_2 = data["answer_2"]
+        answer_3 = data["answer_3"]
+
         prompt = f"""
 
           The scenario was:
 
-          {json_scenario}
+          {scenario}
 
-          The question was: 
+          The questions were: 
 
-          {json_question}
+          1. {question_1}
+
+          2. {question_2}
+
+          3. {question_3}
 
           Grade the responses: 
           
-          {json_answer}
+          1. {answer_1}
+
+          2. {answer_2}
+
+          3. {answer_3}
           
           This is the criteria that Casper uses:
 
@@ -129,6 +145,7 @@ def score_answer():
         app.logger.info("Received response from Ollama server for scoring")
           
         output = response['message']['content']
+        print("output", output)
         json_extracted = extract_json(output)
         print("json_extracted", json_extracted)
         return jsonify(json_extracted)

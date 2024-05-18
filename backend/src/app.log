@@ -96,3 +96,12 @@ Sending request to Ollama server for question generation
 Received response from Ollama server for question generation
 Sending request to Ollama server for question generation
 Received response from Ollama server for question generation
+Sending request to Ollama server for question generation
+Received response from Ollama server for question generation
+An error occurred while scoring an answer: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+An error occurred while scoring an answer: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+An error occurred while scoring an answer: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+Sending request to Ollama server for question generation
+Received response from Ollama server for question generation
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
