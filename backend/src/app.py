@@ -84,9 +84,6 @@ def score_answer():
     try:
         # Use ollama to score the answer provided by the user
         data = request.json
-        print("data")
-        print(data)
-        print(data.keys())
         if not data:
             return jsonify(error="No answers provided"), 400
         
@@ -145,9 +142,7 @@ def score_answer():
         app.logger.info("Received response from Ollama server for scoring")
           
         output = response['message']['content']
-        print("output", output)
         json_extracted = extract_json(output)
-        print("json_extracted", json_extracted)
         return jsonify(json_extracted)
     except Exception as e:
         # Log the exception and return an error message

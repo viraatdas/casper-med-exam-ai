@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Textarea, Text, VStack, Input, Heading, Container, Spinner } from '@chakra-ui/react';
+import { Box, Button, Textarea, Text, VStack, Heading, Container, Spinner } from '@chakra-ui/react';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -17,7 +17,11 @@ function App() {
     answer_3: ''
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState('');
+  const [results, setResults] = useState({
+    score_1: null,
+    score_2: null,
+    score_3: null
+  });
 
   const fetchQuestions = () => {
     setIsLoading(true);
@@ -45,7 +49,6 @@ function App() {
       answer_3: answers.answer_3
     };
 
-
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -54,9 +57,13 @@ function App() {
 
     console.log(payload);
 
-      axios.post(`${apiUrl}/score_answer`, payload, config)
+    axios.post(`${apiUrl}/score_answer`, payload, config)
       .then(response => {
-        setResults(JSON.stringify(response.data, null, 2));
+        setResults({
+          score_1: response.data.score_1,
+          score_2: response.data.score_2,
+          score_3: response.data.score_3
+        });
         setIsLoading(false);
       })
       .catch(error => {
@@ -69,6 +76,14 @@ function App() {
     setAnswers(prev => ({ ...prev, [field]: e.target.value }));
   };
 
+  const calculateTotalScore = () => {
+    return (
+      (parseInt(results.score_1?.[0] || 0, 10) +
+      parseInt(results.score_2?.[0] || 0, 10) +
+      parseInt(results.score_3?.[0] || 0, 10))
+    );
+  };
+
   return (
     <Container maxW="container.md" centerContent p={5}>
       <Heading mb={4} textAlign="center">Practice Casper aka How to Get Away Being a Sociopath</Heading>
@@ -79,16 +94,27 @@ function App() {
           <Text fontSize="xl"><strong>Scenario:</strong> {data.scenario}</Text>
           {[1, 2, 3].map(i => (
             <Box key={i}>
-              <Text fontSize="lg">{data[`question_${i}`]}</Text>
+              <Text fontSize="lg"><strong>Question {i}:</strong> {data[`question_${i}`]}</Text>
               <Textarea
                 placeholder={`Answer ${i}`}
                 value={answers[`answer_${i}`]}
                 onChange={(e) => handleAnswerChange(e, `answer_${i}`)}
+                disabled={isLoading}
               />
+              {results[`score_${i}`] && (
+                <Text mt={2} color="red">
+                  <strong>Score:</strong> {results[`score_${i}`][0]}<br/>
+                  <strong>Feedback:</strong> {results[`score_${i}`][1]}
+                </Text>
+              )}
             </Box>
           ))}
-          <Button colorScheme="teal" onClick={submitAnswers} disabled={isLoading}>Submit Answers</Button>
-          {results && <Text mt={4}><strong>Results:</strong> {results}</Text>}
+          <Button colorScheme="teal" onClick={submitAnswers} disabled={isLoading}>
+            {isLoading ? <Spinner size="sm" /> : 'Submit Answers'}
+          </Button>
+          {results.score_1 && results.score_2 && results.score_3 && (
+            <Text mt={4}><strong>Total Score:</strong> {calculateTotalScore()}</Text>
+          )}
         </VStack>
       )}
     </Container>
