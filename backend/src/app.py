@@ -111,6 +111,7 @@ def score_answer():
 
         app.logger.info("Sending request to Ollama server for scoring")
         response = ollama_client.chat(model=llm_model, messages=[{'role': 'system', 'content': prompt}])
+        print(response)
         app.logger.info("Received response from Ollama server for scoring")
           
         output = json.loads(response['message']['content'])
