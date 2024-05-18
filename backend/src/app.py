@@ -120,6 +120,8 @@ def score_answer():
             "score_2": ["score", "critique as to why it was scored that"],
             "score_3": ["score", "critique as to why it was scored that"],
           }}
+
+          Remember there should only be three answers that you are grading and thus there should only be three scores produced.
         """
 
         app.logger.info("Sending request to Ollama server for scoring")
