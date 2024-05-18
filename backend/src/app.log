@@ -2,3 +2,13 @@ Sending request to Ollama server for question generation
 Received response from Ollama server for question generation
 Sending request to Ollama server for question generation
 Received response from Ollama server for question generation
+An error occurred while scoring an answer: Invalid format specifier ' [score, "critique as to why it was scored that"],
+        "answer_2": [score, "critique as to why it was scored that"],
+        "answer_3": [score, "critique as to why it was scored that"],
+        ' for object of type 'str'
+An error occurred while scoring an answer: '\n            "answer_1"'
+An error occurred while scoring an answer: '\n            "answer_1"'
+An error occurred while scoring an answer: '\n            "answer_1"'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+Failed to parse JSON from Ollama response: Expecting value: line 1 column 1 (char 0)

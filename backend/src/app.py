@@ -84,27 +84,35 @@ def score_answer():
         data = request.json
         if not data or 'answers' not in data:
             return jsonify(error="No answers provided"), 400
-        user_answers = data.get('answers')
-        prompt = """
-        Grade the responses. This is the criteria that Casper uses:
+        
+        json_data = json.dumps(data)
+        prompt = f"""
+          Grade the responses: 
+          
+          {json_data}
+          
+          This is the criteria that Casper uses:
 
-        A Casper response is scored relative to other responses to the same scenario. This means your score signifies the strength of your response compared to other test takers’ responses. Raters are trained to use a likert scale ranging from 1 to 9 (1 being poor and 9 being excellent) to evaluate responses.
+          A Casper response is scored relative to other responses to the same scenario. This means your score signifies the strength of your response compared to other test takers’ responses. Raters are trained to use a likert scale ranging from 1 to 9 (1 being poor and 9 being excellent) to evaluate responses.
 
-        According to Acuity Insights, “Each response score is a function of how well the applicant demonstrates social intelligence and professionalism characteristics, as well as how the response compares to other applicants’ responses to the same scenario in the same test sitting.”
+          According to Acuity Insights, “Each response score is a function of how well the applicant demonstrates social intelligence and professionalism characteristics, as well as how the response compares to other applicants’ responses to the same scenario in the same test sitting.”
 
-        Casper scores—which as of the 2023/2024 cycle are an aggregate of your video and written responses—reflect your overall ability to effectively reflect on and communicate responses to professional and interpersonal dilemmas with critical reasoning and social interpretation. They are Z-scores, also known as standardized scores, of applicants’ raw mean Casper scores. In addition to calculating a score, Acuity Insights also calculates an applicant’s percentile rank and quartile rank.
+          Casper scores—which as of the 2023/2024 cycle are an aggregate of your video and written responses—reflect your overall ability to effectively reflect on and communicate responses to professional and interpersonal dilemmas with critical reasoning and social interpretation. They are Z-scores, also known as standardized scores, of applicants’ raw mean Casper scores. In addition to calculating a score, Acuity Insights also calculates an applicant’s percentile rank and quartile rank.
 
-        As an applicant, you will not receive your specific score; you will only receive a quartile rank that indicates how well you performed relative to your peers on both the video response and typed response sections of Casper. Schools will receive both your Casper score as well as your percentile rank.
+          As an applicant, you will not receive your specific score; you will only receive a quartile rank that indicates how well you performed relative to your peers on both the video response and typed response sections of Casper. Schools will receive both your Casper score as well as your percentile rank.
 
-        Only output a number followed by a critique on why it was graded. so the format is
-        {
-        "answer_1": [score, "critique as to why it was scored that"],
-        "answer_2": [score, "critique as to why it was scored that"],
-        "answer_3": [score, "critique as to why it was scored that"],
-        }
+          Only output a number followed by a critique on why it was graded. so the format is
+          {{
+            "answer_1": [score, "critique as to why it was scored that"],
+            "answer_2": [score, "critique as to why it was scored that"],
+            "answer_3": [score, "critique as to why it was scored that"],
+          }}
         """
+        
+        print(prompt)
+
         app.logger.info("Sending request to Ollama server for scoring")
-        response = ollama_client.chat(model='llama3', messages=[{'role': 'system', 'content': prompt}])
+        response = ollama_client.chat(model=llm_model, messages=[{'role': 'system', 'content': prompt}])
         app.logger.info("Received response from Ollama server for scoring")
         # Parse only the JSON part of the response
         try:
