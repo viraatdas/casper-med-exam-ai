@@ -34,7 +34,20 @@ function App() {
 
   const submitAnswers = () => {
     setIsLoading(true);
-    axios.post(`${apiUrl}/score_answer`, { ...data, ...answers })
+
+    const payload = {
+      scenario: data.scenario,
+      question_1: data.question_1,
+      question_2: data.question_2,
+      question_3: data.question_3,
+      answer_1: answers.answer_1,
+      answer_2: answers.answer_2,
+      answer_3: answers.answer_3
+    };
+
+    console.log(payload);
+
+    axios.post(`${apiUrl}/score_answer`, JSON.stringify(payload, null, 2))
       .then(response => {
         setResults(JSON.stringify(response.data, null, 2));
         setIsLoading(false);
