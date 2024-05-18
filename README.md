@@ -40,9 +40,9 @@ Description: This endpoint accepts a JSON payload containing a scenario, a quest
   "question_1": "Related question to the scenario.",
   "question_2": "Related question to the scenario.",
   "question_3": "Related question to the scenario.",
-  "answer_1": "User's answer to the question."
-  "answer_2": "User's answer to the question."
-  "answer_3": "User's answer to the question."
+  "answer_1": "User's answer to the question.",
+  "answer_2": "User's answer to the question.",
+  "answer_3": "User's answer to the question.",
 }
 ```
 
