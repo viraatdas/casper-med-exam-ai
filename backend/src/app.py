@@ -150,4 +150,4 @@ def score_answer():
         return jsonify(error="An error occurred while scoring an answer"), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
