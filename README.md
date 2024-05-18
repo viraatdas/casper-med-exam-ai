@@ -8,10 +8,6 @@ It uses an LLM (currently [Llama 3](https://llama.meta.com/llama3/)) to generate
 
 We have told it what kind of questions and scoring parameters are used for the Caspr. 
 
-
-## Installation
-
-
 ## API Usage
 
 1. Generate Question
