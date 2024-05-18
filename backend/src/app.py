@@ -3,6 +3,7 @@ import ollama
 import json
 import logging
 from logging.handlers import RotatingFileHandler
+import re
 
 app = Flask(__name__)
 
@@ -13,6 +14,22 @@ app.logger.addHandler(handler)
 
 # Initialize the ollama client without an API key as it's not required
 ollama_client = ollama.Client()
+llm_model = "llama3"
+
+
+def extract_json(output):
+    print(output)
+    json_match = re.search(r'{\s*\"scenario\":.*?}\s*}', output, re.DOTALL)
+    if json_match:
+        json_string = json_match.group(0)
+        try:
+            # Validate and parse the JSON to ensure it's correctly formatted
+            json_data = json.loads(json_string)
+            return json_data
+        except json.JSONDecodeError as e:
+            return {"error": "Failed to decode JSON: " + str(e)}
+    else:
+        return {"error": "No JSON found in the prompt"}
 
 @app.route('/generate_question', methods=['GET'])
 def generate_question():
@@ -49,11 +66,12 @@ def generate_question():
         }
         """
         app.logger.info("Sending request to Ollama server for question generation")
-        response = ollama_client.chat(model='llama3', messages=[{'role': 'system', 'content': prompt}])
+        response = ollama_client.chat(model=llm_model, messages=[{'role': 'system', 'content': prompt}])
         app.logger.info("Received response from Ollama server for question generation")
         # Assuming the response contains a 'message' key with the generated question as its content
-        question = response['message']['content']
-        return jsonify(question=question)
+        output = response['message']['content']
+        json_extracted = extract_json(output)
+        return jsonify(json_extracted)
     except Exception as e:
         app.logger.error(f"An error occurred while generating a question: {e}")
         return jsonify(error="An error occurred while generating a question"), 500
