@@ -1,11 +1,11 @@
-# casper-med-exam-ai
+# Master Da Casper
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e3d802b6-d5b5-42f7-bd6d-87b170bddfa4/deploy-status)](https://app.netlify.com/sites/prep4casper/deploys)
 
+Casper is an ethics exam to get into med school - this is a preparatory website that generates and grades your response.
 
-Casper is an ethics exam to get into med school - this is a preparatory website that generates and grades your response
 
-**Production link:** [foobar]()
+**Production link:** [link](https://prep4casper.netlify.app/)
 ## How does it work?
 
 It uses an LLM (currently [Llama 3](https://llama.meta.com/llama3/)) to generate questions. 
