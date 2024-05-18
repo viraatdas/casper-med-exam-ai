@@ -18,10 +18,11 @@ llm_model = "llama3"
 
 
 def extract_json(output):
-    print(output)
-    json_match = re.search(r'{\s*\"scenario\":.*?}\s*}', output, re.DOTALL)
+    print("Original Output:", output)
+    # Modify the regex to match a broader range of JSON objects, including nested structures
+    json_match = re.search(r'({.*})', output, re.DOTALL)
     if json_match:
-        json_string = json_match.group(0)
+        json_string = json_match.group(1)  # Group 1 to match the entire JSON object
         try:
             # Validate and parse the JSON to ensure it's correctly formatted
             json_data = json.loads(json_string)
