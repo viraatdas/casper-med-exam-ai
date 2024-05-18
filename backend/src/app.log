@@ -48,3 +48,29 @@ An error occurred while scoring an answer: string indices must be integers, not 
 Sending request to Ollama server for scoring
 Received response from Ollama server for scoring
 An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: expected string or bytes-like object, got 'dict'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+An error occurred while scoring an answer: expected string or bytes-like object, got 'dict'
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring
+Sending request to Ollama server for scoring
+Sending request to Ollama server for scoring
+Received response from Ollama server for scoring

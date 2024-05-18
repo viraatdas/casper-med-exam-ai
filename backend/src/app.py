@@ -81,14 +81,25 @@ def score_answer():
     try:
         # Use ollama to score the answer provided by the user
         data = request.json
-        if not data or 'answers' not in data:
+        if not data or 'answer' not in data:
             return jsonify(error="No answers provided"), 400
         
-        json_data = json.dumps(data)
+        json_scenario = json.dumps(data["scenario"])
+        json_question = json.dumps(data["question"])
+        json_answer = json.dumps(data["answer"])
         prompt = f"""
+
+          The scenario was:
+
+          {json_scenario}
+
+          The question was: 
+
+          {json_question}
+
           Grade the responses: 
           
-          {json_data}
+          {json_answer}
           
           This is the criteria that Casper uses:
 
@@ -107,15 +118,14 @@ def score_answer():
             "score_3": ["score", "critique as to why it was scored that"],
           }}
         """
-        
 
         app.logger.info("Sending request to Ollama server for scoring")
         response = ollama_client.chat(model=llm_model, messages=[{'role': 'system', 'content': prompt}])
-        print(response)
         app.logger.info("Received response from Ollama server for scoring")
           
-        output = json.loads(response['message']['content'])
+        output = response['message']['content']
         json_extracted = extract_json(output)
+        print("json_extracted", json_extracted)
         return jsonify(json_extracted)
     except Exception as e:
         # Log the exception and return an error message
