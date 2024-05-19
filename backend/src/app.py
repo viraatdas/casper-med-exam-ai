@@ -22,7 +22,8 @@ ollama_client = ollama.Client()
 environment = os.environ.get('FLASK_ENV', 'production')
 is_debug = environment == 'development' or app.debug
 
-llm_model = "llama3:70b" if not is_debug else "llama3"
+# llm_model = "llama3:70b" if not is_debug else "llama3"
+llm_model = "llama3"
 
 
 def extract_json(output):
