@@ -17,6 +17,7 @@ function App() {
     answer_3: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isScoring, setIsScoring] = useState(false); // State to manage scoring phase
   const [results, setResults] = useState({
     score_1: null,
     score_2: null,
@@ -38,6 +39,7 @@ function App() {
 
   const submitAnswers = () => {
     setIsLoading(true);
+    setIsScoring(true); // Set scoring to true
 
     const payload = {
       scenario: data.scenario,
@@ -55,8 +57,6 @@ function App() {
       }
     };
 
-    console.log(payload);
-
     axios.post(`${apiUrl}/score_answer`, payload, config)
       .then(response => {
         setResults({
@@ -65,10 +65,12 @@ function App() {
           score_3: response.data.score_3
         });
         setIsLoading(false);
+        setIsScoring(false); // Set scoring to false once done
       })
       .catch(error => {
         console.error('Error:', error);
         setIsLoading(false);
+        setIsScoring(false);
       });
   };
 
@@ -89,6 +91,12 @@ function App() {
       <Heading mb={4} textAlign="center">Practice Casper aka How to Get Away Being a Sociopath</Heading>
       <Button colorScheme="blue" onClick={fetchQuestions} isLoading={isLoading}>Generate Questions</Button>
       {isLoading && <Spinner />}
+      {isScoring && (
+        <>
+          <Spinner />
+          <Text>Scoring your answers, please wait...</Text>
+        </>
+      )}
       {!isLoading && data.scenario && (
         <VStack spacing={4} align="stretch" mt={5}>
           <Text fontSize="xl"><strong>Scenario:</strong> {data.scenario}</Text>

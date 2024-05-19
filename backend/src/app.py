@@ -5,6 +5,7 @@ import json
 import logging
 from logging.handlers import RotatingFileHandler
 import re
+import os
 
 
 app = Flask(__name__)
@@ -15,9 +16,13 @@ handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
 handler.setLevel(logging.INFO)
 app.logger.addHandler(handler)
 
-# Initialize the ollama client without an API key as it's not required
+# Initialize the ollama client 
 ollama_client = ollama.Client()
-llm_model = "llama3"
+# Check if the application is in debug mode or not
+environment = os.environ.get('FLASK_ENV', 'production')
+is_debug = environment == 'development' or app.debug
+
+llm_model = "llama3:70b" if not is_debug else "llama3"
 
 
 def extract_json(output):
