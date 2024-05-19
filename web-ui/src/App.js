@@ -103,7 +103,7 @@ function App() {
               />
               {results[`score_${i}`] && (
                 <Text mt={2} color="red">
-                  <strong>Score:</strong> {results[`score_${i}`][0]}<br/>
+                  <strong>Score:</strong> {results[`score_${i}`][0]}/9<br/>
                   <strong>Feedback:</strong> {results[`score_${i}`][1]}
                 </Text>
               )}
@@ -113,7 +113,7 @@ function App() {
             {isLoading ? <Spinner size="sm" /> : 'Submit Answers'}
           </Button>
           {results.score_1 && results.score_2 && results.score_3 && (
-            <Text mt={4}><strong>Total Score:</strong> {calculateTotalScore()}</Text>
+            <Text mt={4}><strong>Total Score:</strong> {calculateTotalScore()}/27</Text>
           )}
         </VStack>
       )}
