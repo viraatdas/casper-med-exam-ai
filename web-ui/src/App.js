@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Textarea, Text, VStack, Heading, Container, Spinner } from '@chakra-ui/react';
+import { Box, Button, Textarea, Text, VStack, Heading, Container, Spinner, Collapse } from '@chakra-ui/react';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -17,12 +17,13 @@ function App() {
     answer_3: ''
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isScoring, setIsScoring] = useState(false); // State to manage scoring phase
+  const [isScoring, setIsScoring] = useState(false);
   const [results, setResults] = useState({
     score_1: null,
     score_2: null,
     score_3: null
   });
+  const [showAbout, setShowAbout] = useState(false);
 
   const fetchQuestions = () => {
     setIsLoading(true);
@@ -39,7 +40,7 @@ function App() {
 
   const submitAnswers = () => {
     setIsLoading(true);
-    setIsScoring(true); // Set scoring to true
+    setIsScoring(true);
 
     const payload = {
       scenario: data.scenario,
@@ -51,52 +52,42 @@ function App() {
       answer_3: answers.answer_3
     };
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    axios.post(`${apiUrl}/score_answer`, payload, config)
-      .then(response => {
-        setResults({
-          score_1: response.data.score_1,
-          score_2: response.data.score_2,
-          score_3: response.data.score_3
-        });
-        setIsLoading(false);
-        setIsScoring(false); // Set scoring to false once done
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        setIsLoading(false);
-        setIsScoring(false);
+    axios.post(`${apiUrl}/score_answer`, payload, {
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(response => {
+      setResults({
+        score_1: response.data.score_1,
+        score_2: response.data.score_2,
+        score_3: response.data.score_3
       });
+      setIsLoading(false);
+      setIsScoring(false);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      setIsLoading(false);
+      setIsScoring(false);
+    });
   };
 
   const handleAnswerChange = (e, field) => {
     setAnswers(prev => ({ ...prev, [field]: e.target.value }));
   };
 
-  const calculateTotalScore = () => {
-    return (
-      (parseInt(results.score_1?.[0] || 0, 10) +
-      parseInt(results.score_2?.[0] || 0, 10) +
-      parseInt(results.score_3?.[0] || 0, 10))
-    );
-  };
+  const calculateTotalScore = () => (
+    (parseInt(results.score_1?.[0] || 0, 10) +
+    parseInt(results.score_2?.[0] || 0, 10) +
+    parseInt(results.score_3?.[0] || 0, 10))
+  );
 
   return (
     <Container maxW="container.md" centerContent p={5}>
       <Heading mb={4} textAlign="center">Practice Casper aka How to Get Away Being a Sociopath</Heading>
       <Button colorScheme="blue" onClick={fetchQuestions} isLoading={isLoading}>Generate Questions</Button>
       {isLoading && <Spinner />}
-      {isScoring && (
-        <>
-          <Spinner />
-          <Text>Scoring your answers, please wait...</Text>
-        </>
-      )}
+      {!isLoading && isScoring && <Spinner />}
+      {!isLoading && isScoring && <Text>Scoring your answers, please wait...</Text>}
       {!isLoading && data.scenario && (
         <VStack spacing={4} align="stretch" mt={5}>
           <Text fontSize="xl"><strong>Scenario:</strong> {data.scenario}</Text>
@@ -117,7 +108,7 @@ function App() {
               )}
             </Box>
           ))}
-          <Button colorScheme="teal" onClick={submitAnswers} disabled={isLoading}>
+          <Button colorScheme="teal" onClick={submitAnswers} disabled={isLoading || isScoring}>
             {isLoading ? <Spinner size="sm" /> : 'Submit Answers'}
           </Button>
           {results.score_1 && results.score_2 && results.score_3 && (
@@ -125,6 +116,12 @@ function App() {
           )}
         </VStack>
       )}
+      <Button mt={4} colorScheme="purple" onClick={() => setShowAbout(!showAbout)}>Toggle About Info</Button>
+      <Collapse in={showAbout}>
+        <Text mt={4}>
+          The CASPer test is a written exam used primarily for medical school admissions, designed to assess key personal and ethical attributes. This app uses AI to generate practice questions based on previous CASPer exams to help users prepare. Answers are graded by the AI to provide feedback on how well the responses align with expected answers.
+        </Text>
+      </Collapse>
     </Container>
   );
 }
