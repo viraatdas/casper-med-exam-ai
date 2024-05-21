@@ -1,165 +1,25 @@
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-An error occurred while scoring an answer: Invalid format specifier ' [score, "critique as to why it was scored that"],
-        "answer_2": [score, "critique as to why it was scored that"],
-        "answer_3": [score, "critique as to why it was scored that"],
-        ' for object of type 'str'
-An error occurred while scoring an answer: '\n            "answer_1"'
-An error occurred while scoring an answer: '\n            "answer_1"'
-An error occurred while scoring an answer: '\n            "answer_1"'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Failed to parse JSON from Ollama response: Expecting value: line 1 column 1 (char 0)
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Failed to parse JSON from Ollama response: Expecting value: line 1 column 1 (char 0)
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: 'answers'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: 'answers'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: 'answers'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: string indices must be integers, not 'str'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: string indices must be integers, not 'str'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: cannot access local variable 'grading_data' where it is not associated with a value
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: cannot access local variable 'grading_data' where it is not associated with a value
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: cannot access local variable 'grading_data' where it is not associated with a value
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: string indices must be integers, not 'str'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: string indices must be integers, not 'str'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: expected string or bytes-like object, got 'dict'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: Expecting value: line 1 column 1 (char 0)
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-An error occurred while scoring an answer: expected string or bytes-like object, got 'dict'
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for scoring
-Sending request to Ollama server for scoring
 Received response from Ollama server for scoring
 Sending request to Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Received response from Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Received response from Ollama server for question generation
-Received response from Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-An error occurred while scoring an answer: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
-An error occurred while scoring an answer: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
-An error occurred while scoring an answer: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for question generation
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for question generation
-Received response from Ollama server for question generation
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
-Sending request to Ollama server for scoring
-Received response from Ollama server for scoring
+An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
