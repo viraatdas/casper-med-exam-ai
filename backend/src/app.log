@@ -23,3 +23,5 @@ Sending request to Ollama server for question generation
 An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
 Sending request to Ollama server for question generation
 An error occurred while generating a question: model 'llama3:70b' not found, try pulling it first
+Sending request to Ollama server for question generation
+Received response from server

@@ -16,13 +16,42 @@ handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
 handler.setLevel(logging.INFO)
 app.logger.addHandler(handler)
 
-# Initialize the ollama client 
-ollama_client = ollama.Client()
 # Check if the application is in debug mode or not
 environment = os.environ.get('FLASK_ENV', 'production')
 is_debug = environment == 'development' or app.debug
 
-llm_model = "llama3:70b" if not is_debug else "llama3"
+if is_debug:
+    import ollama
+    ollama_client = ollama.Client()
+    def chat_api(prompt, model="llama3"):
+        response = ollama_client.chat(model=model, messages=[{'role': 'system', 'content': prompt}])
+        return response['message']['content']
+else:
+    import groq
+    from groq import Groq
+
+    def chat_api(prompt, model="llama3-8b-8192"):
+        groq_client = Groq(
+            api_key=os.environ.get("GROQ_API_KEY"),
+        )
+
+        chat_completion = groq_client.chat.completions.create(
+            messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ],
+            model=model,
+        )
+        
+        return chat_completion.choices[0].message.content
+
+    
+
+# llm_model = "llama3:70b" if not is_debug else "llama3"
+llm_model = "llama3"
+
 
 def extract_json(output):
     # Modify the regex to match a broader range of JSON objects, including nested structures
@@ -86,15 +115,18 @@ def generate_question():
         """
         app.logger.info("Sending request to Ollama server for question generation")
         response = ollama_client.chat(model=llm_model, messages=[{'role': 'system', 'content': prompt}])
-        print("response", response)
-        app.logger.info("Received response from Ollama server for question generation")
+        
+        app.logger.info("Received response from server")
         # Assuming the response contains a 'message' key with the generated question as its content
         output = response['message']['content']
-        json_extracted = extract_json(output)
+
+        response = chat_api(prompt)
+        json_extracted = extract_json(response)
         return jsonify(json_extracted)
     except Exception as e:
         app.logger.error(f"An error occurred while generating a question: {e}")
         return jsonify(error="An error occurred while generating a question"), 500
+
 
 @app.route('/score_answer', methods=['POST'])
 def score_answer():
