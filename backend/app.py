@@ -18,9 +18,9 @@ app.logger.addHandler(handler)
 
 # Check if the application is in debug mode or not
 environment = os.environ.get('FLASK_ENV', 'production')
-is_debug = environment == 'development' or app.debug
 
-if is_debug:
+# Check if the application is in debug mode or not
+if app.debug:
     import ollama
     ollama_client = ollama.Client()
     def chat_api(prompt, model="llama3"):
@@ -29,12 +29,11 @@ if is_debug:
 else:
     import groq
     from groq import Groq
-
-    def chat_api(prompt, model="llama3-8b-8192"):
-        groq_client = Groq(
+    groq_client = Groq(
             api_key=os.environ.get("GROQ_API_KEY"),
         )
 
+    def chat_api(prompt, model="llama3-8b-8192"):
         chat_completion = groq_client.chat.completions.create(
             messages=[
                     {
@@ -118,13 +117,10 @@ def generate_question():
         Remember to output only one scenario and three questions.
         """
         app.logger.info("Sending request to Ollama server for question generation")
-        response = ollama_client.chat(model=llm_model, messages=[{'role': 'system', 'content': prompt}])
+        response = chat_api(prompt)
         
         app.logger.info("Received response from server")
-        # Assuming the response contains a 'message' key with the generated question as its content
-        output = response['message']['content']
 
-        response = chat_api(prompt)
         json_extracted = extract_json(response)
         return jsonify(json_extracted)
     except Exception as e:
@@ -201,11 +197,11 @@ def score_answer():
         """
 
         app.logger.info("Sending request to Ollama server for scoring")
-        response = ollama_client.chat(model=llm_model, messages=[{'role': 'system', 'content': prompt}])
+        response = chat_api(prompt)
+
         app.logger.info("Received response from Ollama server for scoring")
           
-        output = response['message']['content']
-        json_extracted = extract_json(output)
+        json_extracted = extract_json(response)
         return jsonify(json_extracted)
     except Exception as e:
         # Log the exception and return an error message
