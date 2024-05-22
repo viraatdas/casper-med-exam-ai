@@ -67,6 +67,10 @@ def extract_json(output):
     else:
         return {"error": "No JSON found in the prompt"}
 
+@app.route('/', methods=['GET'])
+def status_check():
+    return "Server is running"
+
 @app.route('/generate_question', methods=['GET'])
 def generate_question():
     try:
