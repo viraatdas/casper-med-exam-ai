@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Box, Button, Textarea, Text, VStack, Heading, Container, Spinner, Collapse } from '@chakra-ui/react';
+import DonateButton from './DonateButton';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -83,6 +84,7 @@ const calculateTotalScore = () => (
 
 return (
   <Container maxW="container.md" centerContent p={5}>
+    <DonateButton />
     <Heading mb={4} textAlign="center">Practice Casper aka How to Get Away Being a Sociopath</Heading>
     <Button mt={4} mb={4} colorScheme="purple" onClick={() => setShowAbout(!showAbout)}>
       {showAbout ? 'Hide Info' : 'How does this work?'}
