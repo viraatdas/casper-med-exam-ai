@@ -5,7 +5,7 @@
 Casper is an ethics exam to get into med school - this is a preparatory website that generates and grades your response.
 
 
-**Production link:** [link](https://prep4casper.netlify.app/)
+**Production link:** [link](https://masterthecasper.com)
 ## How does it work?
 
 It uses an LLM (currently [Llama 3](https://llama.meta.com/llama3/)) to generate questions. 
