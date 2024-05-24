@@ -17,7 +17,7 @@ handler.setLevel(logging.INFO)
 app.logger.addHandler(handler)
 
 isDevMode = app.debug
-isDevMode = False
+
 app.logger.info(f"Running in {'development' if isDevMode else 'production'} mode")
 
 # Check if the application is in debug mode or not
