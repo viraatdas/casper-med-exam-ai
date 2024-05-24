@@ -18,7 +18,7 @@ app.logger.addHandler(handler)
 
 isDevMode = app.debug
 isDevMode = False
-print(f"Running in {'development' if isDevMode else 'production'} mode")
+app.logger.info(f"Running in {'development' if isDevMode else 'production'} mode")
 
 # Check if the application is in debug mode or not
 if isDevMode:
@@ -46,9 +46,8 @@ else:
                 ],
             model=model,
         )
-        output = chat_completion.choices[0].message.content
-        print(output)
-        return output
+        
+        return chat_completion.choices[0].message.content
 
 
 def extract_json(output):
