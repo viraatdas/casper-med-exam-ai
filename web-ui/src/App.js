@@ -103,7 +103,7 @@ return (
       </Text>
     </Collapse>
     <Button colorScheme="blue" onClick={fetchQuestions} isLoading={isLoading}>Generate Questions</Button>
-    {isLoading && <Spinner />}
+    {isLoading}
     {!isLoading && isScoring}
     {!isLoading && isScoring && <Text>Scoring your answers, please wait...</Text>}
     {!isLoading && data.scenario && (
@@ -133,12 +133,12 @@ return (
           <Text mt={4}><strong>Total Score:</strong> {calculateTotalScore()}/27</Text>
         )}
         {error && (
-  <Alert status="error" variant="solid" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" height="100px">
-    <AlertIcon boxSize="40px" mr={0} />
-    <AlertTitle mt={4} mb={1} fontSize="lg">Error!</AlertTitle>
-    <AlertDescription maxWidth="sm">{error}</AlertDescription>
-  </Alert>
-)}
+            <Alert status="error" variant="solid" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" height="100px">
+              <AlertIcon boxSize="40px" mr={0} />
+              <AlertTitle mt={4} mb={1} fontSize="lg">Error!</AlertTitle>
+              <AlertDescription maxWidth="sm">{error}</AlertDescription>
+            </Alert>
+        )}
 
       </VStack>
     )}
