@@ -16,14 +16,16 @@ handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
 handler.setLevel(logging.INFO)
 app.logger.addHandler(handler)
 
-# Check if the application is in debug mode or not
-environment = os.environ.get('FLASK_ENV', 'production')
+isDevMode = app.debug
+isDevMode = False
+print(f"Running in {'development' if isDevMode else 'production'} mode")
 
 # Check if the application is in debug mode or not
-if app.debug:
+if isDevMode:
     import ollama
     ollama_client = ollama.Client()
     def chat_api(prompt, model="llama3"):
+        app.logger.info(f"Sending request to Ollama with model {model}")
         response = ollama_client.chat(model=model, messages=[{'role': 'system', 'content': prompt}])
         return response['message']['content']
 else:
@@ -34,6 +36,7 @@ else:
         )
 
     def chat_api(prompt, model="llama3-8b-8192"):
+        app.logger.info(f"Sending request to Groq with model {model}")
         chat_completion = groq_client.chat.completions.create(
             messages=[
                     {
@@ -43,13 +46,9 @@ else:
                 ],
             model=model,
         )
-        
-        return chat_completion.choices[0].message.content
-
-    
-
-# llm_model = "llama3:70b" if not is_debug else "llama3"
-llm_model = "llama3"
+        output = chat_completion.choices[0].message.content
+        print(output)
+        return output
 
 
 def extract_json(output):
@@ -111,15 +110,14 @@ def generate_question():
         "question_1": "Your question here",
         "question_2": "Your question here",
         "question_3": "Your question here",
-
         }
 
         Remember to output only one scenario and three questions.
         """
-        app.logger.info("Sending request to Ollama server for question generation")
+        app.logger.info("Sending request to LLM server for generating a question")
         response = chat_api(prompt)
         
-        app.logger.info("Received response from server")
+        app.logger.info("Received generating question response from server")
 
         json_extracted = extract_json(response)
         return jsonify(json_extracted)
@@ -145,62 +143,44 @@ def score_answer():
         answer_3 = data["answer_3"]
 
         prompt = f"""
+            The following responses have been provided to a given scenario with three questions. Each response should be scored on a scale from 1 to 9, where 1 is the worst and 9 is the best. Scores should reflect the respondent's effort, empathy, equity, communication skills, and familiarity with the test medium. Each score should be accompanied by a critique explaining the rationale behind the score.
 
-          The scenario was:
+            Scenario:
+            {scenario}
 
-          {scenario}
+            Questions and Responses:
+            1. Question: {question_1}
+            Response: {answer_1}
 
-          The questions were: 
+            2. Question: {question_2}
+            Response: {answer_2}
 
-          1. {question_1}
+            3. Question: {question_3}
+            Response: {answer_3}
 
-          2. {question_2}
+            Scoring Criteria:
+            - Effort: Clear explanation and thorough use of allotted time.
+            - Empathy: Consideration of all perspectives.
+            - Equity: Respect and fairness regarding others' needs.
+            - Communication: Clarity and articulation of points.
+            - Familiarity: Understanding of test requirements.
 
-          3. {question_3}
+            Your task is to score each response based on the criteria above. Provide a score and a brief critique for each response. Ensure the output is in the following JSON format:
 
-          Grade the responses: 
-          
-          1. {answer_1}
+            {{
+            "score_1": ["score", "critique explaining the score"],
+            "score_2": ["score", "critique explaining the score"],
+            "score_3": ["score", "critique explaining the score"]
+            }}
 
-          2. {answer_2}
-
-          3. {answer_3}
-          
-          This is the criteria that Casper uses:
-
-          A Casper response is scored relative to other responses to the same scenario. This means your score signifies the strength of your response compared to other test takers’ responses. Raters are trained to use a likert scale ranging from 1 to 9 (1 being poor and 9 being excellent) to evaluate responses.
-
-          Each response score is a function of how well the applicant demonstrates social intelligence and professionalism characteristics, as well as how the response compares to other applicants’ responses to the same scenario in the same test sitting.
-
-          Score based on these five reasons:
-          Effort: You explained your position clearly and used the full allotted time to answer as thoroughly as possible compared to peers in the first quartile.
-          Empathy: You meaningfully considered all perspectives in the scenario.
-          Equity: You showed a great deal of respect and fairness in regards to the needs of others in the scenario.
-          Communication: You articulated your points very well.
-          Familiarity with the medium: You successfully navigated each aspect of the test, indicating you took ample time to familiarize yourself with Casper requirements.
-
-          Consider that when scording. 
-        
-          Whenever you are scoring it, give a score of 1-9. 1 being the worst and 9 being the best. If the answer is too short or not relevant give it a 1. If the answer is well thought out, relevant, and shows a good understanding of the scenario, give it a higher score.
-
-          Try to penalize responses with not too many words. 
-
-          Only output a number followed by a critique on why it was graded. so the format is
-          {{
-            "score_1": ["score", "critique as to why it was scored that"],
-            "score_2": ["score", "critique as to why it was scored that"],
-            "score_3": ["score", "critique as to why it was scored that"],
-          }}
-
-          Remember there should only be three answers that you are grading and thus there should only be three scores produced.
-
+            Note: Only return the JSON object as described.
         """
 
-        app.logger.info("Sending request to Ollama server for scoring")
+        app.logger.info("Sending request to LLM server for scoring")
         response = chat_api(prompt)
 
-        app.logger.info("Received response from Ollama server for scoring")
-          
+        app.logger.info("Received scoring response from server")
+
         json_extracted = extract_json(response)
         return jsonify(json_extracted)
     except Exception as e:

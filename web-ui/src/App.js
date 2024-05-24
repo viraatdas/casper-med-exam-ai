@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Textarea, Text, VStack, Heading, Container, Spinner, Collapse } from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, AlertDescription, Box, Button, Textarea, Text, VStack, Heading, Container, Spinner, Collapse } from '@chakra-ui/react';
+
 import DonateButton from './DonateButton';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -25,16 +26,23 @@ function App() {
     score_3: null
   });
   const [showAbout, setShowAbout] = useState(false);
+  const [error, setError] = useState("");
+
 
   const fetchQuestions = () => {
     setIsLoading(true);
+
     axios.get(`${apiUrl}/generate_question`)
     .then(response => {
+      setAnswers({}) // Reset answers
+      setResults({}) // Reset results
       setData(response.data);
+      
       setIsLoading(false);
     })
     .catch(error => {
       console.error('Error:', error);
+      setError("Failed to fetch questions. Please try again."); // Set the error message
       setIsLoading(false);
     });
 };
@@ -96,7 +104,7 @@ return (
     </Collapse>
     <Button colorScheme="blue" onClick={fetchQuestions} isLoading={isLoading}>Generate Questions</Button>
     {isLoading && <Spinner />}
-    {!isLoading && isScoring && <Spinner />}
+    {!isLoading && isScoring}
     {!isLoading && isScoring && <Text>Scoring your answers, please wait...</Text>}
     {!isLoading && data.scenario && (
       <VStack spacing={4} align="stretch" mt={5}>
@@ -124,6 +132,14 @@ return (
         {results.score_1 && results.score_2 && results.score_3 && (
           <Text mt={4}><strong>Total Score:</strong> {calculateTotalScore()}/27</Text>
         )}
+        {error && (
+  <Alert status="error" variant="solid" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" height="100px">
+    <AlertIcon boxSize="40px" mr={0} />
+    <AlertTitle mt={4} mb={1} fontSize="lg">Error!</AlertTitle>
+    <AlertDescription maxWidth="sm">{error}</AlertDescription>
+  </Alert>
+)}
+
       </VStack>
     )}
   </Container>
